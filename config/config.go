@@ -15,6 +15,7 @@ type ServerConfig struct {
 
 type ServicesConfig struct {
 	Account ServiceConfig
+	Auth    ServiceConfig
 }
 
 type ServiceConfig struct {

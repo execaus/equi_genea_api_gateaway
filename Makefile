@@ -40,3 +40,5 @@ update_api_contracts:
 			echo "Updated API contracts to $$LATEST"; \
 		fi \
 	)
+
+update_generate_contracts: update_api_contracts generate_protobuf

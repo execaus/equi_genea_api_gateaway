@@ -109,6 +109,190 @@ func (x *GetAccountByIdResponse) GetAccount() *Account {
 	return nil
 }
 
+type CreateAccountRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	PasswordHash  string                 `protobuf:"bytes,2,opt,name=passwordHash,proto3" json:"passwordHash,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateAccountRequest) Reset() {
+	*x = CreateAccountRequest{}
+	mi := &file_api_account_service_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateAccountRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateAccountRequest) ProtoMessage() {}
+
+func (x *CreateAccountRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_account_service_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateAccountRequest.ProtoReflect.Descriptor instead.
+func (*CreateAccountRequest) Descriptor() ([]byte, []int) {
+	return file_api_account_service_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *CreateAccountRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *CreateAccountRequest) GetPasswordHash() string {
+	if x != nil {
+		return x.PasswordHash
+	}
+	return ""
+}
+
+type CreateAccountResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Account       *Account               `protobuf:"bytes,1,opt,name=account,proto3" json:"account,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateAccountResponse) Reset() {
+	*x = CreateAccountResponse{}
+	mi := &file_api_account_service_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateAccountResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateAccountResponse) ProtoMessage() {}
+
+func (x *CreateAccountResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_account_service_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateAccountResponse.ProtoReflect.Descriptor instead.
+func (*CreateAccountResponse) Descriptor() ([]byte, []int) {
+	return file_api_account_service_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *CreateAccountResponse) GetAccount() *Account {
+	if x != nil {
+		return x.Account
+	}
+	return nil
+}
+
+type IsExistByEmailRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IsExistByEmailRequest) Reset() {
+	*x = IsExistByEmailRequest{}
+	mi := &file_api_account_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IsExistByEmailRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsExistByEmailRequest) ProtoMessage() {}
+
+func (x *IsExistByEmailRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_account_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsExistByEmailRequest.ProtoReflect.Descriptor instead.
+func (*IsExistByEmailRequest) Descriptor() ([]byte, []int) {
+	return file_api_account_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *IsExistByEmailRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+type IsExistByEmailResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	IsExist       bool                   `protobuf:"varint,1,opt,name=isExist,proto3" json:"isExist,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *IsExistByEmailResponse) Reset() {
+	*x = IsExistByEmailResponse{}
+	mi := &file_api_account_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *IsExistByEmailResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*IsExistByEmailResponse) ProtoMessage() {}
+
+func (x *IsExistByEmailResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_account_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use IsExistByEmailResponse.ProtoReflect.Descriptor instead.
+func (*IsExistByEmailResponse) Descriptor() ([]byte, []int) {
+	return file_api_account_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *IsExistByEmailResponse) GetIsExist() bool {
+	if x != nil {
+		return x.IsExist
+	}
+	return false
+}
+
 var File_api_account_service_proto protoreflect.FileDescriptor
 
 const file_api_account_service_proto_rawDesc = "" +
@@ -117,9 +301,20 @@ const file_api_account_service_proto_rawDesc = "" +
 	"\x15GetAccountByIdRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"C\n" +
 	"\x16GetAccountByIdResponse\x12)\n" +
-	"\aaccount\x18\x01 \x01(\v2\x0f.models.AccountR\aaccount2c\n" +
+	"\aaccount\x18\x01 \x01(\v2\x0f.models.AccountR\aaccount\"P\n" +
+	"\x14CreateAccountRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\"\n" +
+	"\fpasswordHash\x18\x02 \x01(\tR\fpasswordHash\"B\n" +
+	"\x15CreateAccountResponse\x12)\n" +
+	"\aaccount\x18\x01 \x01(\v2\x0f.models.AccountR\aaccount\"-\n" +
+	"\x15IsExistByEmailRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\"2\n" +
+	"\x16IsExistByEmailResponse\x12\x18\n" +
+	"\aisExist\x18\x01 \x01(\bR\aisExist2\x86\x02\n" +
 	"\x0eAccountService\x12Q\n" +
-	"\x0eGetAccountById\x12\x1e.account.GetAccountByIdRequest\x1a\x1f.account.GetAccountByIdResponseB\x15Z\x13api/account;accountb\x06proto3"
+	"\x0eGetAccountById\x12\x1e.account.GetAccountByIdRequest\x1a\x1f.account.GetAccountByIdResponse\x12N\n" +
+	"\rCreateAccount\x12\x1d.account.CreateAccountRequest\x1a\x1e.account.CreateAccountResponse\x12Q\n" +
+	"\x0eIsExistByEmail\x12\x1e.account.IsExistByEmailRequest\x1a\x1f.account.IsExistByEmailResponseB\x15Z\x13api/account;accountb\x06proto3"
 
 var (
 	file_api_account_service_proto_rawDescOnce sync.Once
@@ -133,21 +328,30 @@ func file_api_account_service_proto_rawDescGZIP() []byte {
 	return file_api_account_service_proto_rawDescData
 }
 
-var file_api_account_service_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_api_account_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_api_account_service_proto_goTypes = []any{
 	(*GetAccountByIdRequest)(nil),  // 0: account.GetAccountByIdRequest
 	(*GetAccountByIdResponse)(nil), // 1: account.GetAccountByIdResponse
-	(*Account)(nil),                // 2: models.Account
+	(*CreateAccountRequest)(nil),   // 2: account.CreateAccountRequest
+	(*CreateAccountResponse)(nil),  // 3: account.CreateAccountResponse
+	(*IsExistByEmailRequest)(nil),  // 4: account.IsExistByEmailRequest
+	(*IsExistByEmailResponse)(nil), // 5: account.IsExistByEmailResponse
+	(*Account)(nil),                // 6: models.Account
 }
 var file_api_account_service_proto_depIdxs = []int32{
-	2, // 0: account.GetAccountByIdResponse.account:type_name -> models.Account
-	0, // 1: account.AccountService.GetAccountById:input_type -> account.GetAccountByIdRequest
-	1, // 2: account.AccountService.GetAccountById:output_type -> account.GetAccountByIdResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 0: account.GetAccountByIdResponse.account:type_name -> models.Account
+	6, // 1: account.CreateAccountResponse.account:type_name -> models.Account
+	0, // 2: account.AccountService.GetAccountById:input_type -> account.GetAccountByIdRequest
+	2, // 3: account.AccountService.CreateAccount:input_type -> account.CreateAccountRequest
+	4, // 4: account.AccountService.IsExistByEmail:input_type -> account.IsExistByEmailRequest
+	1, // 5: account.AccountService.GetAccountById:output_type -> account.GetAccountByIdResponse
+	3, // 6: account.AccountService.CreateAccount:output_type -> account.CreateAccountResponse
+	5, // 7: account.AccountService.IsExistByEmail:output_type -> account.IsExistByEmailResponse
+	5, // [5:8] is the sub-list for method output_type
+	2, // [2:5] is the sub-list for method input_type
+	2, // [2:2] is the sub-list for extension type_name
+	2, // [2:2] is the sub-list for extension extendee
+	0, // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_api_account_service_proto_init() }
@@ -162,7 +366,7 @@ func file_api_account_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_account_service_proto_rawDesc), len(file_api_account_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   2,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

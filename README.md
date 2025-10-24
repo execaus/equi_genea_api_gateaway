@@ -8,5 +8,9 @@ server:
 
 services:
   account:
+    host: "localhost"
+    port: "9090"
+  auth:
+    host: "localhost"
     port: "9090"
 ```
