@@ -4,6 +4,7 @@
 
 ```yaml
 server:
+  allowOrigin: "http://localhost:5173"
   port: "8080"
 
 services:

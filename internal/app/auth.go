@@ -70,3 +70,7 @@ func (h *Handler) signUp(c *gin.Context) {
 		Token: generateTokenResponse.Token,
 	})
 }
+
+func (h *Handler) signIn(c *gin.Context) {
+
+}

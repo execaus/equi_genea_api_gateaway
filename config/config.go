@@ -10,7 +10,8 @@ type Config struct {
 }
 
 type ServerConfig struct {
-	Port string
+	AllowOrigin string
+	Port        string
 }
 
 type ServicesConfig struct {

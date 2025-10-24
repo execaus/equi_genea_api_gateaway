@@ -6,7 +6,9 @@ import (
 	authpb "equi_genea_api_gateaway/internal/pb/api/auth"
 	"fmt"
 	"log"
+	"time"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -54,10 +56,21 @@ func (h *Handler) connectServices(cfg *config.ServicesConfig) error {
 	return nil
 }
 
-func (h *Handler) GetRouter() *gin.Engine {
+func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 	router := gin.Default()
 
-	auth := router.Group("/auth")
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{serverConfig.AllowOrigin},
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * time.Hour,
+	}))
+
+	api := router.Group("/api")
+
+	auth := api.Group("/auth")
 	{
 		auth.POST("/sign-up", h.signUp)
 	}

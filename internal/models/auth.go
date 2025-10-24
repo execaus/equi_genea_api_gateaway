@@ -5,5 +5,5 @@ type SignUpRequest struct {
 }
 
 type SignUpResponse struct {
-	Token string
+	Token string `json:"token"`
 }
