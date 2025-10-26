@@ -73,6 +73,7 @@ func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 	auth := api.Group("/auth")
 	{
 		auth.POST("/sign-up", h.signUp)
+		auth.POST("/sign-in", h.signIn)
 	}
 
 	return router
