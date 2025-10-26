@@ -76,5 +76,10 @@ func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 		auth.POST("/sign-in", h.signIn)
 	}
 
+	herd := api.Group("/herd", h.authMiddleware)
+	{
+		herd.POST("", h.createHerd)
+	}
+
 	return router
 }
