@@ -4,6 +4,7 @@ import (
 	"equi_genea_api_gateaway/config"
 	accountpb "equi_genea_api_gateaway/internal/pb/api/account"
 	authpb "equi_genea_api_gateaway/internal/pb/api/auth"
+	herdpb "equi_genea_api_gateaway/internal/pb/api/herd"
 	"fmt"
 	"log"
 	"time"
@@ -21,6 +22,7 @@ type Handler struct {
 type Services struct {
 	Account accountpb.AccountServiceClient
 	Auth    authpb.AuthServiceClient
+	Herd    herdpb.HerdServiceClient
 }
 
 func NewHandler(cfg *config.ServicesConfig) (*Handler, error) {
@@ -48,9 +50,16 @@ func (h *Handler) connectServices(cfg *config.ServicesConfig) error {
 	}
 	authClient := authpb.NewAuthServiceClient(conn)
 
+	conn, err = grpc.NewClient(fmt.Sprintf("%s:%s", cfg.Herd.Host, cfg.Herd.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		return err
+	}
+	herdClient := herdpb.NewHerdServiceClient(conn)
+
 	h.services = Services{
 		Account: accountClient,
 		Auth:    authClient,
+		Herd:    herdClient,
 	}
 
 	return nil
