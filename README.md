@@ -14,4 +14,7 @@ services:
   auth:
     host: "localhost"
     port: "9090"
+  herd:
+    host: "localhost"
+    port: "9090"
 ```
