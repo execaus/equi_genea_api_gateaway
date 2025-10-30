@@ -8,7 +8,7 @@ import (
 type HerdOutput struct {
 	ID          string    `json:"id"`
 	Name        string    `json:"name"`
-	Description *string   `json:"description,omitempty"`
+	Description *string   `json:"description"`
 	AccountID   string    `json:"account_id"`
 	CreatedAt   time.Time `json:"created_at"`
 	UpdatedAt   time.Time `json:"updated_at"`
@@ -39,4 +39,9 @@ type CreateHerdRequest struct {
 
 type CreateHerdResponse struct {
 	Herd HerdOutput `json:"herd"`
+}
+
+type GetHerdListResponse struct {
+	Herds      []HerdOutput `json:"herds"`
+	TotalCount int32        `json:"totalCount"`
 }

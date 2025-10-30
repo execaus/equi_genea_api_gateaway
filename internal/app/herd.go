@@ -2,7 +2,7 @@ package app
 
 import (
 	"equi_genea_api_gateaway/internal/models"
-	"equi_genea_api_gateaway/internal/pb/api/herd"
+	herdpb "equi_genea_api_gateaway/internal/pb/api/herd"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -22,7 +22,7 @@ func (h *Handler) createHerd(c *gin.Context) {
 		return
 	}
 
-	createHerdResponse, err := h.services.Herd.CreateHerd(c.Request.Context(), &herd.CreateHerdRequest{
+	createHerdResponse, err := h.services.Herd.CreateHerd(c.Request.Context(), &herdpb.CreateHerdRequest{
 		Name:        input.Name,
 		Description: input.Description,
 		AccountId:   accountID,
@@ -37,4 +37,38 @@ func (h *Handler) createHerd(c *gin.Context) {
 	herdOutput.LoadFromHerdPB(createHerdResponse.Herd)
 
 	c.JSON(http.StatusOK, &models.CreateHerdResponse{Herd: herdOutput})
+}
+
+func (h *Handler) getHerdList(c *gin.Context) {
+	var queryParams models.GetListParams
+
+	queryParams.BindFromContext(c)
+
+	accountID, exists := getAccountIDFromContext(c)
+	if !exists {
+		c.AbortWithStatus(http.StatusUnauthorized)
+		return
+	}
+
+	getHerdListResponse, err := h.services.Herd.GetHerdList(c.Request.Context(), &herdpb.GetHerdListRequest{
+		Limit:     queryParams.Limit,
+		Page:      queryParams.Page,
+		Search:    queryParams.Search,
+		AccountId: accountID,
+	})
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	herds := make([]models.HerdOutput, len(getHerdListResponse.Herds))
+	for i, herd := range getHerdListResponse.Herds {
+		herds[i] = models.HerdOutput{}
+		herds[i].LoadFromHerdPB(herd)
+	}
+
+	c.JSON(http.StatusOK, &models.GetHerdListResponse{
+		Herds:      herds,
+		TotalCount: getHerdListResponse.TotalCount,
+	})
 }

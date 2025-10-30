@@ -88,6 +88,7 @@ func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 	herd := api.Group("/herd", h.authMiddleware)
 	{
 		herd.POST("", h.createHerd)
+		herd.GET("", h.getHerdList)
 	}
 
 	return router
