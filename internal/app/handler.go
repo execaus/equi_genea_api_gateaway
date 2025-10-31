@@ -5,6 +5,7 @@ import (
 	accountpb "equi_genea_api_gateaway/internal/pb/api/account"
 	authpb "equi_genea_api_gateaway/internal/pb/api/auth"
 	herdpb "equi_genea_api_gateaway/internal/pb/api/herd"
+	horsepb "equi_genea_api_gateaway/internal/pb/api/horse"
 	"fmt"
 	"log"
 	"time"
@@ -23,6 +24,7 @@ type Services struct {
 	Account accountpb.AccountServiceClient
 	Auth    authpb.AuthServiceClient
 	Herd    herdpb.HerdServiceClient
+	Horse   horsepb.HorseServiceClient
 }
 
 func NewHandler(cfg *config.ServicesConfig) (*Handler, error) {
@@ -56,10 +58,17 @@ func (h *Handler) connectServices(cfg *config.ServicesConfig) error {
 	}
 	herdClient := herdpb.NewHerdServiceClient(conn)
 
+	conn, err = grpc.NewClient(fmt.Sprintf("%s:%s", cfg.Horse.Host, cfg.Horse.Port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		return err
+	}
+	horseClient := horsepb.NewHorseServiceClient(conn)
+
 	h.services = Services{
 		Account: accountClient,
 		Auth:    authClient,
 		Herd:    herdClient,
+		Horse:   horseClient,
 	}
 
 	return nil
@@ -89,6 +98,11 @@ func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 	{
 		herd.POST("", h.createHerd)
 		herd.GET("", h.getHerdList)
+	}
+
+	horseGender := api.Group("/horse-gender")
+	{
+		horseGender.GET("", h.getHorseGenderList)
 	}
 
 	return router

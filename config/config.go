@@ -18,6 +18,7 @@ type ServicesConfig struct {
 	Account ServiceConfig
 	Auth    ServiceConfig
 	Herd    ServiceConfig
+	Horse   ServiceConfig
 }
 
 type ServiceConfig struct {

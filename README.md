@@ -17,4 +17,7 @@ services:
   herd:
     host: "localhost"
     port: "9090"
+  horse:
+    host: "localhost"
+    port: "9090"
 ```
