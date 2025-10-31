@@ -245,6 +245,94 @@ func (x *GetHerdListResponse) GetTotalCount() int32 {
 	return 0
 }
 
+type GetHerdByIdRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetHerdByIdRequest) Reset() {
+	*x = GetHerdByIdRequest{}
+	mi := &file_api_herd_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetHerdByIdRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetHerdByIdRequest) ProtoMessage() {}
+
+func (x *GetHerdByIdRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_api_herd_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetHerdByIdRequest.ProtoReflect.Descriptor instead.
+func (*GetHerdByIdRequest) Descriptor() ([]byte, []int) {
+	return file_api_herd_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetHerdByIdRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type GetHerdByIdResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Herd          *Herd                  `protobuf:"bytes,1,opt,name=herd,proto3" json:"herd,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GetHerdByIdResponse) Reset() {
+	*x = GetHerdByIdResponse{}
+	mi := &file_api_herd_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetHerdByIdResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetHerdByIdResponse) ProtoMessage() {}
+
+func (x *GetHerdByIdResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_api_herd_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetHerdByIdResponse.ProtoReflect.Descriptor instead.
+func (*GetHerdByIdResponse) Descriptor() ([]byte, []int) {
+	return file_api_herd_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetHerdByIdResponse) GetHerd() *Herd {
+	if x != nil {
+		return x.Herd
+	}
+	return nil
+}
+
 var File_api_herd_service_proto protoreflect.FileDescriptor
 
 const file_api_herd_service_proto_rawDesc = "" +
@@ -267,11 +355,16 @@ const file_api_herd_service_proto_rawDesc = "" +
 	"\x13GetHerdListResponse\x12\"\n" +
 	"\x05herds\x18\x01 \x03(\v2\f.models.HerdR\x05herds\x12\x1f\n" +
 	"\vtotal_count\x18\x02 \x01(\x05R\n" +
-	"totalCount2\x92\x01\n" +
+	"totalCount\"$\n" +
+	"\x12GetHerdByIdRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\"7\n" +
+	"\x13GetHerdByIdResponse\x12 \n" +
+	"\x04herd\x18\x01 \x01(\v2\f.models.HerdR\x04herd2\xd6\x01\n" +
 	"\vHerdService\x12?\n" +
 	"\n" +
 	"CreateHerd\x12\x17.herd.CreateHerdRequest\x1a\x18.herd.CreateHerdResponse\x12B\n" +
-	"\vGetHerdList\x12\x18.herd.GetHerdListRequest\x1a\x19.herd.GetHerdListResponseB\x0fZ\rapi/herd;herdb\x06proto3"
+	"\vGetHerdList\x12\x18.herd.GetHerdListRequest\x1a\x19.herd.GetHerdListResponse\x12B\n" +
+	"\vGetHerdById\x12\x18.herd.GetHerdByIdRequest\x1a\x19.herd.GetHerdByIdResponseB\x0fZ\rapi/herd;herdb\x06proto3"
 
 var (
 	file_api_herd_service_proto_rawDescOnce sync.Once
@@ -285,26 +378,31 @@ func file_api_herd_service_proto_rawDescGZIP() []byte {
 	return file_api_herd_service_proto_rawDescData
 }
 
-var file_api_herd_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_api_herd_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_api_herd_service_proto_goTypes = []any{
 	(*CreateHerdRequest)(nil),   // 0: herd.CreateHerdRequest
 	(*CreateHerdResponse)(nil),  // 1: herd.CreateHerdResponse
 	(*GetHerdListRequest)(nil),  // 2: herd.GetHerdListRequest
 	(*GetHerdListResponse)(nil), // 3: herd.GetHerdListResponse
-	(*Herd)(nil),                // 4: models.Herd
+	(*GetHerdByIdRequest)(nil),  // 4: herd.GetHerdByIdRequest
+	(*GetHerdByIdResponse)(nil), // 5: herd.GetHerdByIdResponse
+	(*Herd)(nil),                // 6: models.Herd
 }
 var file_api_herd_service_proto_depIdxs = []int32{
-	4, // 0: herd.CreateHerdResponse.herd:type_name -> models.Herd
-	4, // 1: herd.GetHerdListResponse.herds:type_name -> models.Herd
-	0, // 2: herd.HerdService.CreateHerd:input_type -> herd.CreateHerdRequest
-	2, // 3: herd.HerdService.GetHerdList:input_type -> herd.GetHerdListRequest
-	1, // 4: herd.HerdService.CreateHerd:output_type -> herd.CreateHerdResponse
-	3, // 5: herd.HerdService.GetHerdList:output_type -> herd.GetHerdListResponse
-	4, // [4:6] is the sub-list for method output_type
-	2, // [2:4] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	6, // 0: herd.CreateHerdResponse.herd:type_name -> models.Herd
+	6, // 1: herd.GetHerdListResponse.herds:type_name -> models.Herd
+	6, // 2: herd.GetHerdByIdResponse.herd:type_name -> models.Herd
+	0, // 3: herd.HerdService.CreateHerd:input_type -> herd.CreateHerdRequest
+	2, // 4: herd.HerdService.GetHerdList:input_type -> herd.GetHerdListRequest
+	4, // 5: herd.HerdService.GetHerdById:input_type -> herd.GetHerdByIdRequest
+	1, // 6: herd.HerdService.CreateHerd:output_type -> herd.CreateHerdResponse
+	3, // 7: herd.HerdService.GetHerdList:output_type -> herd.GetHerdListResponse
+	5, // 8: herd.HerdService.GetHerdById:output_type -> herd.GetHerdByIdResponse
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_api_herd_service_proto_init() }
@@ -320,7 +418,7 @@ func file_api_herd_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_herd_service_proto_rawDesc), len(file_api_herd_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

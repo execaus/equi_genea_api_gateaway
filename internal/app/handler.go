@@ -98,6 +98,7 @@ func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 	{
 		herd.POST("", h.createHerd)
 		herd.GET("", h.getHerdList)
+		herd.GET("/:id", h.getHerdByID)
 	}
 
 	horseGender := api.Group("/horse-gender")

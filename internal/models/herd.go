@@ -45,3 +45,7 @@ type GetHerdListResponse struct {
 	Herds      []HerdOutput `json:"herds"`
 	TotalCount int32        `json:"totalCount"`
 }
+
+type GetHerdByIDResponse struct {
+	Herd *HerdOutput `json:"herd"`
+}

@@ -21,6 +21,7 @@ const _ = grpc.SupportPackageIsVersion9
 const (
 	HerdService_CreateHerd_FullMethodName  = "/herd.HerdService/CreateHerd"
 	HerdService_GetHerdList_FullMethodName = "/herd.HerdService/GetHerdList"
+	HerdService_GetHerdById_FullMethodName = "/herd.HerdService/GetHerdById"
 )
 
 // HerdServiceClient is the client API for HerdService service.
@@ -29,6 +30,7 @@ const (
 type HerdServiceClient interface {
 	CreateHerd(ctx context.Context, in *CreateHerdRequest, opts ...grpc.CallOption) (*CreateHerdResponse, error)
 	GetHerdList(ctx context.Context, in *GetHerdListRequest, opts ...grpc.CallOption) (*GetHerdListResponse, error)
+	GetHerdById(ctx context.Context, in *GetHerdByIdRequest, opts ...grpc.CallOption) (*GetHerdByIdResponse, error)
 }
 
 type herdServiceClient struct {
@@ -59,12 +61,23 @@ func (c *herdServiceClient) GetHerdList(ctx context.Context, in *GetHerdListRequ
 	return out, nil
 }
 
+func (c *herdServiceClient) GetHerdById(ctx context.Context, in *GetHerdByIdRequest, opts ...grpc.CallOption) (*GetHerdByIdResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetHerdByIdResponse)
+	err := c.cc.Invoke(ctx, HerdService_GetHerdById_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // HerdServiceServer is the server API for HerdService service.
 // All implementations must embed UnimplementedHerdServiceServer
 // for forward compatibility.
 type HerdServiceServer interface {
 	CreateHerd(context.Context, *CreateHerdRequest) (*CreateHerdResponse, error)
 	GetHerdList(context.Context, *GetHerdListRequest) (*GetHerdListResponse, error)
+	GetHerdById(context.Context, *GetHerdByIdRequest) (*GetHerdByIdResponse, error)
 	mustEmbedUnimplementedHerdServiceServer()
 }
 
@@ -80,6 +93,9 @@ func (UnimplementedHerdServiceServer) CreateHerd(context.Context, *CreateHerdReq
 }
 func (UnimplementedHerdServiceServer) GetHerdList(context.Context, *GetHerdListRequest) (*GetHerdListResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetHerdList not implemented")
+}
+func (UnimplementedHerdServiceServer) GetHerdById(context.Context, *GetHerdByIdRequest) (*GetHerdByIdResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetHerdById not implemented")
 }
 func (UnimplementedHerdServiceServer) mustEmbedUnimplementedHerdServiceServer() {}
 func (UnimplementedHerdServiceServer) testEmbeddedByValue()                     {}
@@ -138,6 +154,24 @@ func _HerdService_GetHerdList_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _HerdService_GetHerdById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetHerdByIdRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(HerdServiceServer).GetHerdById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: HerdService_GetHerdById_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(HerdServiceServer).GetHerdById(ctx, req.(*GetHerdByIdRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // HerdService_ServiceDesc is the grpc.ServiceDesc for HerdService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -152,6 +186,10 @@ var HerdService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetHerdList",
 			Handler:    _HerdService_GetHerdList_Handler,
+		},
+		{
+			MethodName: "GetHerdById",
+			Handler:    _HerdService_GetHerdById_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
