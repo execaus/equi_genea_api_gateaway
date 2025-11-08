@@ -2,7 +2,7 @@ package app
 
 import (
 	"equi_genea_api_gateaway/internal/pb/api/auth"
-	"net/http"
+	"fmt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -15,7 +15,8 @@ const AccountIDKey contextKey = "accountID"
 func (h *Handler) authMiddleware(c *gin.Context) {
 	authHeader := c.GetHeader("Authorization")
 	if authHeader == "" || !strings.HasPrefix(authHeader, "Bearer ") {
-		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{"error": "missing or invalid Authorization header"})
+		fmt.Println("missing or invalid Authorization header")
+		sendUnauthorized(c)
 		return
 	}
 
@@ -25,7 +26,8 @@ func (h *Handler) authMiddleware(c *gin.Context) {
 		Token: token,
 	})
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		fmt.Println(err.Error())
+		sendUnauthorized(c)
 		return
 	}
 

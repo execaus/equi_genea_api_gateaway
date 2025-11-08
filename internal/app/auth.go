@@ -4,6 +4,7 @@ import (
 	"equi_genea_api_gateaway/internal/models"
 	"equi_genea_api_gateaway/internal/pb/api/account"
 	authpb "equi_genea_api_gateaway/internal/pb/api/auth"
+	"errors"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,7 @@ func (h *Handler) signUp(c *gin.Context) {
 	var input models.SignUpRequest
 
 	if err := c.BindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		sendBadRequest(c, err)
 		return
 	}
 
@@ -22,18 +23,18 @@ func (h *Handler) signUp(c *gin.Context) {
 		&account.IsExistByEmailRequest{Email: input.Email},
 	)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
 	if isExistResponse.IsExist {
-		c.AbortWithStatus(http.StatusConflict)
+		sendConflict(c, "user with this email already exists")
 		return
 	}
 
 	generatePasswordResponse, err := h.services.Auth.GeneratePassword(c.Request.Context(), nil)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -41,7 +42,7 @@ func (h *Handler) signUp(c *gin.Context) {
 		Password: generatePasswordResponse.Password,
 	})
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -54,7 +55,7 @@ func (h *Handler) signUp(c *gin.Context) {
 		},
 	)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -63,11 +64,11 @@ func (h *Handler) signUp(c *gin.Context) {
 		&authpb.GenerateTokenRequest{Id: createAccountResponse.Account.Id},
 	)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
-	c.JSON(http.StatusOK, &models.SignUpResponse{
+	sendCreated(c, &models.SignUpResponse{
 		Token: generateTokenResponse.Token,
 	})
 }
@@ -76,7 +77,7 @@ func (h *Handler) signIn(c *gin.Context) {
 	var input models.SignInRequest
 
 	if err := c.BindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		sendBadRequest(c, err)
 		return
 	}
 
@@ -85,7 +86,7 @@ func (h *Handler) signIn(c *gin.Context) {
 		&account.IsExistByEmailRequest{Email: input.Email},
 	)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -101,7 +102,7 @@ func (h *Handler) signIn(c *gin.Context) {
 		},
 	)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -110,12 +111,12 @@ func (h *Handler) signIn(c *gin.Context) {
 		Password:       input.Password,
 	})
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
 	if !comparePasswordResponse.IsMatch {
-		c.AbortWithStatus(http.StatusBadRequest)
+		sendBadRequest(c, errors.New("invalid credentials"))
 		return
 	}
 
@@ -123,11 +124,11 @@ func (h *Handler) signIn(c *gin.Context) {
 		Id: getAccountByEmailResponse.Account.Id,
 	})
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
-	c.JSON(http.StatusOK, &models.SignInResponse{
+	sendOK(c, &models.SignInResponse{
 		Token: generateTokenResponse.Token,
 	})
 }

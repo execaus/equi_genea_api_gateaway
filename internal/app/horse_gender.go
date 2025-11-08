@@ -2,7 +2,6 @@ package app
 
 import (
 	"equi_genea_api_gateaway/internal/models"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +9,7 @@ import (
 func (h *Handler) getHorseGenderList(c *gin.Context) {
 	getGenderListResponse, err := h.services.Horse.GetGenderList(c, nil)
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -23,5 +22,5 @@ func (h *Handler) getHorseGenderList(c *gin.Context) {
 		}
 	}
 
-	c.JSON(http.StatusOK, &models.GetHorseGenderListResponse{Genders: gendersOutput})
+	sendOK(c, &models.GetHorseGenderListResponse{Genders: gendersOutput})
 }

@@ -3,7 +3,7 @@ package app
 import (
 	"equi_genea_api_gateaway/internal/models"
 	herdpb "equi_genea_api_gateaway/internal/pb/api/herd"
-	"net/http"
+	"errors"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,13 +12,13 @@ func (h *Handler) createHerd(c *gin.Context) {
 	var input models.CreateHerdRequest
 
 	if err := c.BindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, err.Error())
+		sendBadRequest(c, err)
 		return
 	}
 
 	accountID, exists := getAccountIDFromContext(c)
 	if !exists {
-		c.AbortWithStatus(http.StatusUnauthorized)
+		sendUnauthorized(c)
 		return
 	}
 
@@ -28,7 +28,7 @@ func (h *Handler) createHerd(c *gin.Context) {
 		AccountId:   accountID,
 	})
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -36,7 +36,7 @@ func (h *Handler) createHerd(c *gin.Context) {
 
 	herdOutput.LoadFromHerdPB(createHerdResponse.Herd)
 
-	c.JSON(http.StatusOK, &models.CreateHerdResponse{Herd: herdOutput})
+	sendOK(c, &models.CreateHerdResponse{Herd: herdOutput})
 }
 
 func (h *Handler) getHerdList(c *gin.Context) {
@@ -46,7 +46,7 @@ func (h *Handler) getHerdList(c *gin.Context) {
 
 	accountID, exists := getAccountIDFromContext(c)
 	if !exists {
-		c.AbortWithStatus(http.StatusUnauthorized)
+		sendUnauthorized(c)
 		return
 	}
 
@@ -57,7 +57,7 @@ func (h *Handler) getHerdList(c *gin.Context) {
 		AccountId: accountID,
 	})
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
@@ -67,7 +67,7 @@ func (h *Handler) getHerdList(c *gin.Context) {
 		herds[i].LoadFromHerdPB(herd)
 	}
 
-	c.JSON(http.StatusOK, &models.GetHerdListResponse{
+	sendOK(c, &models.GetHerdListResponse{
 		Herds:      herds,
 		TotalCount: getHerdListResponse.TotalCount,
 	})
@@ -76,18 +76,18 @@ func (h *Handler) getHerdList(c *gin.Context) {
 func (h *Handler) getHerdByID(c *gin.Context) {
 	id := c.Param("id")
 	if id == "" {
-		c.AbortWithStatus(http.StatusBadRequest)
+		sendBadRequest(c, errors.New("invalid path parameter id"))
 		return
 	}
 
 	getHerdByIdResponse, err := h.services.Herd.GetHerdById(c.Request.Context(), &herdpb.GetHerdByIdRequest{Id: id})
 	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
+		sendInternalError(c, err)
 		return
 	}
 
 	herd := models.HerdOutput{}
 	herd.LoadFromHerdPB(getHerdByIdResponse.Herd)
 
-	c.JSON(http.StatusOK, &models.GetHerdByIDResponse{Herd: &herd})
+	sendOK(c, &models.GetHerdByIDResponse{Herd: &herd})
 }
