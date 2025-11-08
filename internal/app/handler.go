@@ -111,5 +111,10 @@ func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 		horseColor.GET("", h.getHorseColorList)
 	}
 
+	horseBirthplace := api.Group("/horse-birthplace")
+	{
+		horseBirthplace.GET("", h.getHorseBirthplaces)
+	}
+
 	return router
 }
