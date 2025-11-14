@@ -121,5 +121,10 @@ func (h *Handler) GetRouter(serverConfig *config.ServerConfig) *gin.Engine {
 		horseGeneticMarker.GET("", h.getGeneticMarkers)
 	}
 
+	horseBreed := api.Group("/horse-breed")
+	{
+		horseBreed.GET("", h.getBreeds)
+	}
+
 	return router
 }
